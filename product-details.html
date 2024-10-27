@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h2 id="product-name">Product Name</h2>
+    </header>
+    <div class="product-image">
+        <img id="product-image" src="" alt="Product Image">
+    </div>
+    <div class="product-description">
+        <p id="product-description">Product description goes here.</p>
+        <div class="details">
+            <div>
+                <h4>Description</h4>
+                <p>Crafted from exquisite material<br>Earthy tones<br>Extremely comfortable<br>Versatile elegance</p>
+            </div>
+            <div>
+                <h4>Composition</h4>
+                <p>Sustainably sourced<br>Durable materials</p>
+            </div>
+        </div>
+        <div class="price-add">
+            <span id="product-price">$10</span>
+            <a id="add-to-cart-link" href="#">
+                <button class="add-to-cart-btn">Add to Cart</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Sample product data
+    const products = {
+        "bracelet": {
+            name: "Woodland Bracelet",
+            price: 10,
+            image: "gambar/bracelet.jpeg",
+            description: "A beautiful bracelet crafted from natural wood, embodying a rustic charm."
+        },
+        "necklace": {
+            name: "PalmBloom Necklace",
+            price: 12,
+            image: "gambar/necklace.jpg",
+            description: "A unique necklace made from palm materials, adding a touch of elegance."
+        },
+        "earrings": {
+            name: "Wood Earrings",
+            price: 8,
+            image: "gambar/earrings.jpeg",
+            description: "Stylish wooden earrings that complement any natural look."
+        },
+        "ring": {
+            name: "Wooden Rings",
+            price: 15,
+            image: "gambar/ring.jpeg",
+            description: "A ring made of fine wood for an earthy, bold statement."
+        },
+        "wallet": {
+            name: "HDPE Wallet",
+            price: 5,
+            image: "gambar/wallet.jpeg",
+            description: "An eco-friendly wallet crafted from durable HDPE materials."
+        }
+    };
+
+    // Get the product ID from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get("product");
+
+    // Update the page based on the selected product
+    if (products[productId]) {
+        const product = products[productId];
+        document.getElementById("product-name").textContent = product.name;
+        document.getElementById("product-price").textContent = "$" + product.price;
+        document.getElementById("product-image").src = product.image;
+        document.getElementById("product-description").textContent = product.description;
+
+        // Update the Add to Cart link with product info
+        document.getElementById("add-to-cart-link").href = `cart.html?product=${productId}&price=${product.price}&name=${encodeURIComponent(product.name)}&image=${encodeURIComponent(product.image)}`;
+    } else {
+        document.getElementById("product-name").textContent = "Product not found";
+    }
+</script>
+
+</body>
+</html>

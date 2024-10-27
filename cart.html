@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h2>Cart</h2>
+    </header>
+    <div class="cart-item">
+        <img id="cart-product-image" src="" alt="Product Image">
+        <div class="item-details">
+            <h3 id="cart-product-name">Product Name</h3>
+            <p id="cart-product-price" data-price="10">$10</p>
+            <div class="quantity">
+                <button onclick="decreaseQuantity()">-</button>
+                <span id="quantity">1</span>
+                <button onclick="increaseQuantity()">+</button>
+            </div>
+        </div>
+    </div>
+    <div class="cart-summary">
+        <p>Total: $<span id="total-price">10</span></p>
+        <button>Go to Checkout</button>
+    </div>
+</div>
+
+<script>
+    // Get product details from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const productName = urlParams.get("name");
+    const productPrice = parseFloat(urlParams.get("price"));
+    const productImage = urlParams.get("image");
+
+    // Set initial values
+    let quantity = 1;
+
+    // Update cart page with product info from URL parameters
+    if (productName && productPrice && productImage) {
+        document.getElementById("cart-product-name").textContent = productName;
+        document.getElementById("cart-product-price").textContent = "$" + productPrice;
+        document.getElementById("cart-product-image").src = decodeURIComponent(productImage);
+    } else {
+        document.getElementById("cart-product-name").textContent = "Product not found";
+    }
+
+    // Function to update quantity and total price
+    function updateCart() {
+        document.getElementById("quantity").textContent = quantity;
+        const totalPrice = quantity * productPrice;
+        document.getElementById("total-price").textContent = totalPrice.toFixed(2);
+    }
+
+    // Function to increase quantity
+    function increaseQuantity() {
+        quantity++;
+        updateCart();
+    }
+
+    // Function to decrease quantity
+    function decreaseQuantity() {
+        if (quantity > 1) {
+            quantity--;
+            updateCart();
+        }
+    }
+
+    // Initial cart update
+    updateCart();
+</script>
+
+</body>
+</html>
