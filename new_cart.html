@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="aset/rizzo.png" type="image/x-icon">
+    <title>Shopping Cart</title>
+</head>
+<body>
+    <header>
+        <h1>Rizzhoma</h1>
+        <nav>
+            <a href="homepage.html">Home</a>
+            <a href="#">About</a>
+            <a href="#">Contact Us</a>
+        </nav>
+    </header>
+
+    <main class="cart-page">
+        <h2>Shopping Cart</h2>
+        <div class="product-list">
+            <div class="product-container">
+                <div class="product-card" data-name="Woodland Bracelet" data-price="10">
+                    <img src="aset/bracelet.jpeg.jpg" alt="Woodland Bracelet">
+                    <p>Woodland Bracelet<br>$10</p>
+                    <button onclick="addToCart('Woodland Bracelet', 10)">Add to Cart</button>
+                </div>
+                <div class="product-card" data-name="PalmBloom Necklace" data-price="12">
+                    <img src="aset/necklace.jpg" alt="PalmBloom Necklace">
+                    <p>PalmBloom Necklace<br>$12</p>
+                    <button onclick="addToCart('PalmBloom Necklace', 12)">Add to Cart</button>
+                </div>
+                <div class="product-card" data-name="Wood Earrings" data-price="8">
+                    <img src="aset/earrings.jpeg.jpg" alt="Wood Earrings">
+                    <p>Wood Earrings<br>$8</p>
+                    <button onclick="addToCart('Wood Earrings', 8)">Add to Cart</button>
+                </div>
+                <div class="product-card" data-name="Wooden Rings" data-price="15">
+                    <img src="aset/ring.jpeg.jpg" alt="Wooden Rings">
+                    <p>Wooden Rings<br>$15</p>
+                    <button onclick="addToCart('Wooden Rings', 15)">Add to Cart</button>
+                </div>
+                <div class="product-card" data-name="HSDE wallet" data-price="5">
+                    <img src="aset/wallet.jpeg.jpg" alt="HSDE wallet">
+                    <p>HSDE wallet<br>$5</p>
+                    <button onclick="addToCart('HSDE wallet', 5)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+        <a href="cart.html" class="checkout-link">Go to Checkout</a>
+    </main>
+
+    <footer>
+        <div class="footer-section">Company Info</div>
+        <div class="footer-section">Help Links</div>
+        <div class="footer-section">Useful Links</div>
+        <div class="footer-section">Get in the Know</div>
+    </footer>
+
+    <script>
+        function addToCart(name, price) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ name, price, quantity: 1 });
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert(name + " added to cart");
+        }
+    </script>
+</body>
+</html>

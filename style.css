@@ -1,0 +1,95 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #6096B4;
+
+}
+
+header h1 {
+    margin: 0;
+}
+
+header nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+.cart-page, .checkout-page {
+    padding: 20px;
+}
+
+.product-list {
+    font-size: 24px;
+    color:#333;
+    margin-bottom: 15px;
+}
+
+.product-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 10px;
+    scroll-behavior: smooth;
+}
+
+.product-card {
+    text-align: center;
+    min-width: 200px;
+    flex-shrink: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.product-card img {
+    width: 200px;
+    height: 200px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.billing-details, .order-summary {
+    margin-bottom: 20px;
+}
+
+.billing-details input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.order-summary table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.order-summary td {
+    padding: 10px;
+    border-top: 1px solid #ddd;
+}
+
+footer {
+    padding: 20px;
+    background-color: #6096B4;
+    display: flex;
+    justify-content: space-around;
+    font-size: 14px;
+}
+
+footer .footer-section {
+    flex: 1;
+    padding: 0 10px;
+}

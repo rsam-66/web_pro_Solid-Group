@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="aset/rizzo.png" type="image/x-icon">
+    <title>Checkout</title>
+</head>
+<body>
+    <header>
+        <h1>Rizzhoma</h1>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Contact Us</a>
+        </nav>
+    </header>
+
+    <main class="checkout-page">
+        <h2>Checkout</h2>
+        <section class="billing-details">
+            <h3>Billing Details</h3>
+            <form>
+                <input type="text" placeholder="Full Name" required>
+                <input type="text" placeholder="Street Address" required>
+                <input type="text" placeholder="Town / City" required>
+                <input type="text" placeholder="Phone" required>
+                <input type="email" placeholder="Email Address" required>
+            </form>
+        </section>
+
+        <section class="order-summary">
+            <h3>Your Order</h3>
+            <table id="order-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">Subtotal</td>
+                        <td>$<span id="subtotal">0.00</span></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Total</td>
+                        <td>$<span id="total">0.00</span></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+            <p>Cash on delivery. Please contact us if you require assistance or wish to make alternate arrangements.</p>
+            <button type="submit">Place Order</button>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-section">Company Info</div>
+        <div class="footer-section">Help Links</div>
+        <div class="footer-section">Useful Links</div>
+        <div class="footer-section">Get in the Know</div>
+    </footer>
+
+    <script>
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const orderTableBody = document.getElementById('order-table').querySelector('tbody');
+        const subtotalElement = document.getElementById('subtotal');
+        const totalElement = document.getElementById('total');
+
+        function updateOrderSummary() {
+            let subtotal = 0;
+            orderTableBody.innerHTML = '';
+
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>
+                        <input type="number" value="${item.quantity}" min="1" data-price="${item.price}" data-index="${index}" class="quantity-input">
+                    </td>
+                    <td>$<span class="item-total">${itemTotal.toFixed(2)}</span></td>
+                    <td><button class="remove-item" data-index="${index}">Remove</button></td>
+                `;
+                orderTableBody.appendChild(row);
+            });
+
+            subtotalElement.textContent = subtotal.toFixed(2);
+            totalElement.textContent = subtotal.toFixed(2);
+        }
+        orderTableBody.addEventListener('input', (event) => {
+            if (event.target.classList.contains('quantity-input')) {
+                const row = event.target.closest('tr');
+                const quantity = parseInt(event.target.value);
+                const price = parseFloat(event.target.getAttribute('data-price'));
+                const itemTotal = quantity * price;
+                const index = event.target.getAttribute('data-index');
+
+                row.querySelector('.item-total').textContent = itemTotal.toFixed(2);
+
+                cart[index].quantity = quantity;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateOrderSummary();
+            }
+        });
+
+        orderTableBody.addEventListener('click', (event) => {
+            if (event.target.classList.contains('remove-item')) {
+                const index = event.target.getAttribute('data-index');
+                cart.splice(index, 1);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateOrderSummary();
+            }
+        });
+
+        updateOrderSummary();
+    </script>
+</body>
+</html>
